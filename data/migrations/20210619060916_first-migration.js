@@ -2,15 +2,14 @@
 exports.up = function(knex) {
     return knex.schema
 
-    .createTable('users', users => {
-        users.increments();
-        users.string('username', 255).notNullable().unique();
-        users.string('password', 255).notNullable();
+    .createTable('users', table => {
+        table.increments();
+        table.text('username', 255).notNullable().unique();
+        table.text('password', 255).notNullable();
     })
     .createTable('boards', table => {
         table.increments('board_id');
-        table.text('username', 255).notNullable().unique();
-        table.text('password', 255).notNullable();
+        table.text('name', 255).notNullable().unique();
     })
     .createTable('articles', table => {
         table.increments('article_id')
@@ -28,7 +27,7 @@ exports.up = function(knex) {
     })
     .createTable('categories', table => {
         table.increments('category_id')
-        table.text('name', 255).notNullable()
+        table.text('name', 255).notNullable().unique()
         table.integer('article_id')
             .unsigned()
             .notNullable()
