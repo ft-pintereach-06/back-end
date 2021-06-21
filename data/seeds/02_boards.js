@@ -1,7 +1,7 @@
 const boards = [
-  { name: 'Medical' },
-  { name: 'Biology' },
-  { name: 'Chemistry' },
+  { board_name: 'Medical' },
+  { board_name: 'Biology' },
+  { board_name: 'Chemistry' }
 ]
 
 exports.boards = boards

@@ -4,21 +4,21 @@ exports.up = function(knex) {
 
     .createTable('users', table => {
         table.increments('user_id');
-        table.text('username', 255).notNullable().unique();
-        table.text('password', 255).notNullable();
+        table.string('username', 255).notNullable().unique();
+        table.string('password', 255).notNullable();
     })
     .createTable('boards', table => {
         table.increments('board_id');
-        table.text('board_name', 255).notNullable().unique();
+        table.string('board_name', 255).notNullable().unique();
     })
     .createTable('categories', table => {
         table.increments('category_id')
-        table.text('category_name', 255).notNullable().unique()
+        table.string('category_name', 255).notNullable().unique()
     })
     .createTable('articles', table => {
         table.increments('article_id')
-        table.text('article_title', 255).notNullable()
-        table.text('article_url').notNullable()
+        table.string('article_title', 255).notNullable()
+        table.string('article_url', 255).notNullable()
         table.integer('article_rank')
         table.integer('board_id')
             .unsigned()
@@ -27,7 +27,7 @@ exports.up = function(knex) {
             .inTable('boards')
             .onUpdate('CASCADE')
             .onDelete('CASCADE')
-        table.text('category_name')
+        table.string('category_name')
             .unsigned()
             // .notNullable()
             .references('category_name')

@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
   .catch(next)
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', md.checkArticleId, async (req, res, next) => {
   const { id } = req.params
 
   await Articles.getById(id)
@@ -20,7 +20,7 @@ router.get('/:id', async (req, res, next) => {
   .catch(next)
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', md.checkPayload, async (req, res, next) => {
   const body = req.body
 
   await Articles.add(body)
@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', md.checkArticleId, async (req, res, next) => {
   await Articles.updateById(req.params.id, req.body)
   .then(article => {
     res.status(200).json(article)
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res, next) => {
   .catch(next)
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', md.checkArticleId, async (req, res, next) => {
   const { id } = req.params
   await Articles.deleteById(id)
   .then(article => {
