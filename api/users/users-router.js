@@ -3,7 +3,7 @@ const Users = require("./users-model.js");
 const { restricted, only } = require("../auth/auth-middleware.js");
 
 // router.get("/", restricted, (req, res, next) => {
-router.get("/", (req, res, next) => {
+router.get("/", restricted, (req, res, next) => {
   Users.getAll()
     .then(users => {
       res.json(users);

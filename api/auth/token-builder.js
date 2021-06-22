@@ -4,7 +4,7 @@ const { JWT_SECRET } = require('../secrets/index')
 
 module.exports = function (user) { // Create a token payload containing the user's id and username
   const payload = {
-    subject: user.id,
+    subject: user.user_id,
     username: user.username,
   }
   const options = {

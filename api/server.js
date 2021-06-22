@@ -5,9 +5,9 @@ const helmet = require('helmet');
 const server = express();
 const articlesRouter = require('./articles/articles-router')
 const boardsRouter = require('./boards/boards-router')
-const categoriesRouter = require('./categories/categories-router')
 const usersRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
+const authMd = require('./auth/auth-middleware')
 
 // routers
 // const _Router = require('./_/_-router');
@@ -19,10 +19,10 @@ server.use(express.json());
 
 // server.use(logger);
 
-server.use('/api/articles', articlesRouter)
-server.use('/api/boards', boardsRouter)
-server.use('/api/categories', categoriesRouter)
-server.use('/api/users', usersRouter)
+server.use('/api/articles', authMd.restricted, articlesRouter)
+server.use('/api/boards', authMd.restricted, boardsRouter)
+// server.use('/api/categories', categoriesRouter)
+server.use('/api/users', authMd.restricted, usersRouter)
 server.use('/api/auth', authRouter)
 
 server.use('*', (req, res) => {
@@ -33,7 +33,6 @@ server.use('*', (req, res) => {
 // eslint-disable-next-line
 server.use((err, req, res, next) => {
 	res.status(err.status || 500).json({
-		custom: 'Strange things are afoot at the circle K',
 		message: err.message,
 		stack: err.stack
 	});

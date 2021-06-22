@@ -2,7 +2,7 @@ const db = require('../../data/dbConfig.js');
 
 function getAll() { // Get all users
     return db('users as u')
-    .select('user_id', 'username')
+    .select('user_id', 'username', 'password')
 }
 
 function findBy(filter) { // Find all users (used later for searching by Username)
@@ -16,9 +16,7 @@ const getById = async (id) => { // Find by user ID
 }
 
 const add = async (user) => {
-  console.log(user)
   const [newUser] = await db('users').insert(user, 'user_id')
-  console.log(newUser)
   return getById(newUser)
 }
 

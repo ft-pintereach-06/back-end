@@ -18,11 +18,11 @@ router.post('/register', md.validateBody, md.checkUsernameUnique, (req, res, nex
         .catch(next)
 });
 
-router.post('/login', md.checkUsernameExists, (req, res) => {
-    const { username, password, id } = req.user
+router.post('/login', md.validateBody, md.checkUsernameExists, (req, res) => {
+    const { username, password, user_id } = req.user
 
     if(bcrypt.compareSync(req.body.password, password)) {
-        const token = tokenBuilder({id, username})
+        const token = tokenBuilder({user_id, username})
         res.status(200).json({message: `welcome, ${username}`, token})
     } else {
         res.status(400).json({message: 'Invalid Credentials'})
