@@ -19,6 +19,9 @@ server.use(express.json());
 
 // server.use(logger);
 
+server.use('/', (req, res) => {
+	res.status(200).send('Welcome to ft-pintereach-06. A read-me will be here shortly.')
+})
 server.use('/api/articles', authMd.restricted, articlesRouter)
 server.use('/api/boards', authMd.restricted, boardsRouter)
 // server.use('/api/categories', categoriesRouter)
