@@ -17,8 +17,8 @@ const getMyArticles = async (id) => {
 const add = async (article, user_id) => {
   const newArticle = await db('articles').insert(article, ['article_id'])
   const { article_id } = newArticle[0]
-  const test = {user_id: user_id, article_id: article_id}
-  await db('user_articles').insert(test, ['user_article_id'])
+  const newUserArticle = {user_id: user_id, article_id: article_id}
+  await db('user_articles').insert(newUserArticle, ['*'])
   return getById(article_id)
 }
 

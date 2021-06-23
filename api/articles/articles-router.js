@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Articles = require('./articles-model');
 const md = require('./articles-middleware')
+const auth = require('../auth/auth-middleware')
 
-router.get('/all', (req, res, next) => {
+router.get('/all', auth.restricted, (req, res, next) => {
   Articles.getAll()
   .then(articles => {
     res.status(200).json(articles)
@@ -10,7 +11,7 @@ router.get('/all', (req, res, next) => {
   .catch(next)
 });
 
-router.get('/', (req, res, next) => {
+router.get('/', auth.restricted, (req, res, next) => {
   const user_id = req.decodedJwt.subject
   console.log(user_id)
   Articles.getMyArticles(user_id)
@@ -21,7 +22,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/:id', md.checkArticleId, async (req, res, next) => {
+router.get('/:id', md.checkArticleId, auth.restricted, async (req, res, next) => {
   const { id } = req.params
 
   await Articles.getById(id)
@@ -31,7 +32,7 @@ router.get('/:id', md.checkArticleId, async (req, res, next) => {
   .catch(next)
 });
 
-router.post('/', md.checkPayload, async (req, res, next) => {
+router.post('/', md.checkPayload, auth.restricted, async (req, res, next) => {
   const body = req.body
   const user_id = req.decodedJwt.subject
   await Articles.add(body, user_id)
